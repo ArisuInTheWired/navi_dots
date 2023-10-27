@@ -1,0 +1,3 @@
+NetwrokManager.service # wifi
+dhcpcd.service         # web name resolver
+

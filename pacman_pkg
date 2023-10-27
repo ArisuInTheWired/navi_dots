@@ -1,0 +1,68 @@
+# system
+sudo
+xorg
+
+# Network / wifi
+networkmanager
+network-manager-applet
+dhcp
+dhcpcd
+
+# sound
+pulseaudio
+pulseaudio-alsa
+pulseaudio-jack
+pavucontrol
+
+# wm
+i3-wm
+i3-gaps
+i3lock
+i3status
+
+# menu + notification
+rofi
+dunst
+
+# theming
+python-pywal
+# pywalfox
+# pywal-discord
+neofetch
+
+# fonts
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+
+# file manger
+nnn
+dolphin
+
+zip
+unzip
+
+neovim  # text 
+zathura # pdf
+cmus    # sound
+mpv     # video
+feh     # images
+
+# dev
+python
+python-pip
+git
+gcc
+make
+dpkg
+pkgconf
+
+# utils
+flameshot     # screenshot
+numlockx      # numlock on start 
+brightnessctl # laptop screen brightness
+firefox       # web browsing
+powertop      # optimization
+openssh       # ssh key
+xclip         # clipboard from terminal
+

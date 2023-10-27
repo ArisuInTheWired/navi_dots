@@ -1,0 +1,42 @@
+#!/bin/python
+
+import os
+import subprocess
+
+# check root
+if os.getuid() != 0:
+    print("[ERRO]: this script must be run as root")
+    exit(-1)
+
+
+# check if pacman is installed
+result = subprocess.run(["systemct > /dev/null"])
+print(result)
+
+
+
+"""
+# install pacman pkg
+fp = open("systemct_ervice", "r")
+lines = fp.readlines()
+
+for i, line in enumerate(lines):
+    if len(line) > 1 and line[0] != '#':
+        line = line[:-1]
+
+        status, result = subprocess.getstatusoutput(f"systemctl enable {line}")
+
+        if status != 0:
+            print(f"\r[WARN]: can't enable \"{line}\": {result}"+20*" "+"\n")
+            continue
+        
+    ratio = (i+1)/len(lines)
+    bar =  "=" * round(20*ratio)
+    bar += "-" * round(20*(1-ratio))
+    print("\r[INFO]: systemctl service setup ["+bar+"] %.2f" %(100*ratio) + " %",end="")
+
+print("\n")
+           
+fp.close()
+
+"""

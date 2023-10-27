@@ -1,0 +1,49 @@
+#!/bin/python
+
+import os
+
+# check root
+if os.getuid() != 0:
+    print("[ERRO]: this script must be run as root")
+    exit(-1)
+
+# check if pacman is installed
+import subprocess
+from subprocess import PIPE
+
+status, result = subprocess.getstatusoutput("pacman -h")
+if status != 0:
+    print("[ERRO]: pacman must be installed")
+    exit(-1)
+
+# update mirrors
+status, result = subprocess.getstatusoutput("pacman -Sy")
+if status != 0:
+    print(f"[ERRO]: can't update mirors: {result}")
+    exit(-1)
+
+# install pacman pkg
+fp = open("pacman_pkg", "r")
+lines = fp.readlines()
+
+for i, line in enumerate(lines):
+    if len(line) > 1 and line[0] != '#':
+        line = line[:-1]
+
+        #print(f"Installing \"{line}\" ...")
+        status, result = subprocess.getstatusoutput(f"pacman -S --needed --noconfirm {line}")
+
+        if status != 0:
+            print(f"\r[WARN]: can't install \"{line}\": {result}"+20*" "+"\n")
+            continue
+        
+    ratio = (i+1)/len(lines)
+    bar =  "=" * round(20*ratio)
+    bar += "-" * round(20*(1-ratio))
+    print("\r[INFO]: pacman packages installation ["+bar+"] %.2f" %(100*ratio) + " %",end="")
+
+print("\n")
+           
+fp.close()
+
+

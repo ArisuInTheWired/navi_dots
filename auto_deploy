@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Make sure only root can run our script
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+# Check arch based
+pacman -h > /dev/null
+RESULT=$?
+
+if [ $RESULT != 0 ]; then
+    echo "You need an arch based distro to install those dots"
+    exit 1
+fi
+
+# Install needed package
+echo "[INFO] update mirors..."
+pacman -Sy
+RESULT=$?
+
+if [ $RESULT != 0 ]; then
+    echo "Can't update mirors, check your connection"
+    exit 1
+fi
+echo ""
+
+echo "[INFO] install git and python..."
+pacman -S --noconfirm python git
+if [ $RESULT != 0 ]; then
+    echo "Can't install needed packages, check your connection"
+    exit 1
+fi
+echo ""
+
+
