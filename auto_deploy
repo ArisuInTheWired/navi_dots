@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# find user for installation
+C_USER="$(ls "/home/" | cut -d" " -f1)"
+USER_DIR="/home/$C_USER"
+
+if [ "$C_USER" == "" ]; then
+    echo "Can't find a home directory user"
+    exit 1
+fi
+echo "[INFO] installing for userer: C_USER ..."
+
 # Make sure only root can run our script
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 1>&2
@@ -28,10 +38,40 @@ echo ""
 
 echo "[INFO] install git and python..."
 pacman -S --noconfirm python git
+RESULT=$?
 if [ $RESULT != 0 ]; then
     echo "Can't install needed packages, check your connection"
     exit 1
 fi
 echo ""
 
+# cloning dots 
+echo "[INFO] Download requiered data..."
+cd "$USER_DIR"
 
+git clone "https://github.com/ArisuInTheWired/navi_dots"
+RESULT=$?
+if [ $RESULT != 0 ]; then
+    echo "Can't clone navi_dots reposetory, check your connection"
+    exit 1
+fi
+echo ""
+
+# install packages
+echo "[INFO] Install packages"
+
+./navi_dots/install_pkg
+RESULT=$?
+if [ $RESULT != 0 ]; then
+    echo "package installation failed, exit"
+    rm -rf "./navi_dots"
+    exit 1
+fi
+echo ""
+
+
+
+# post installation cleean
+echo "[INFO] clean data..."
+rm -rf "./navi_dots"
+echo "[INFO] installation finished"
