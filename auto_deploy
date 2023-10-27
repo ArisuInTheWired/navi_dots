@@ -8,7 +8,7 @@ if [ "$C_USER" == "" ]; then
     echo "Can't find a home directory user"
     exit 1
 fi
-echo "[INFO] installing for userer: C_USER ..."
+echo "[INFO] installing for user: $C_USER ..."
 
 # Make sure only root can run our script
 if [[ $EUID -ne 0 ]]; then
